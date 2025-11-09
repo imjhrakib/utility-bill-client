@@ -55,14 +55,16 @@ const RegistrationPage = () => {
               placeholder="Password"
               required
             />
-            <button className="btn btn-neutral mt-4">Register</button>
+            <button className="btn btn-outline btn-primary mt-4">
+              Register
+            </button>
           </fieldset>
         </form>
         <p className="text-center text-xl font-bold">OR</p>
         {/* Google */}
         <button
           onClick={handleGoogleSignIn}
-          className="btn bg-white text-black border-[#e5e5e5]"
+          className="btn bg-white text-black border-gray-700 hover:bg-[#34A853] hover:border-none"
         >
           <svg
             aria-label="Google logo"
