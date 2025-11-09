@@ -10,6 +10,7 @@ import MyPayBills from "./layouts/MyPayBills.jsx";
 import MyProfile from "./layouts/MyProfile.jsx";
 import LoginPage from "./components/LoginPage/LoginPage.jsx";
 import RegistrationPage from "./components/RegistrationPage/RegistrationPage.jsx";
+import AuthProvider from "./provider/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,8 +47,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <RootLayout></RootLayout>
-    </RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </StrictMode>
 );

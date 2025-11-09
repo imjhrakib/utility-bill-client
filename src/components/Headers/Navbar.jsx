@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../provider/AuthContext";
 
 const Navbar = () => {
+  const { user, signOutUser } = useContext(AuthContext);
+  const handleLogOut = () => {
+    signOutUser().then(() => {
+      console.log("signOut successfully");
+    });
+  };
   const links = (
     <>
       <li>
@@ -10,9 +17,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/bills"}>Bills</NavLink>
       </li>
-      <li>
-        <NavLink to={"/myPayBills"}>My Pay Bills</NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to={"/myPayBills"}>My Pay Bills</NavLink>
+        </li>
+      )}
       <li>
         <NavLink to={"/profile"}>Profile</NavLink>
       </li>
@@ -56,13 +65,28 @@ const Navbar = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{links}</ul>
           </div>
-          <div className="flex gap-3.5">
-            <NavLink to={"/login"}>
-              <button className="btn btn-outline btn-success">Login</button>
-            </NavLink>
-            <NavLink to={"/register"}>
-              <button className="btn btn-outline btn-primary">Register</button>
-            </NavLink>
+          <div>
+            {user ? (
+              <NavLink>
+                <button
+                  onClick={handleLogOut}
+                  className="btn btn-outline btn-error"
+                >
+                  LogOut
+                </button>
+              </NavLink>
+            ) : (
+              <div className="flex gap-2.5">
+                <NavLink to={"/login"}>
+                  <button className="btn btn-outline btn-success">Login</button>
+                </NavLink>
+                <NavLink to={"/register"}>
+                  <button className="btn btn-outline btn-primary">
+                    Register
+                  </button>
+                </NavLink>
+              </div>
+            )}
           </div>
         </div>
       </div>

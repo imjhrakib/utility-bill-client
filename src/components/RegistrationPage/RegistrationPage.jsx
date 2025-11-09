@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../provider/AuthContext";
+import { updateProfile } from "firebase/auth";
 
 const RegistrationPage = () => {
+  const { user, createUser, signInWithGoogle } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log("registration successfully");
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photoUrl = e.target.photo.value;
+    const password = e.target.password.value;
+    const newUser = {
+      name,
+      email,
+      password,
+      photoUrl,
+    };
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        updateProfile(user, {
+          displayName: name,
+          photoURL: photoUrl,
+        });
+      })
+      .catch((error) => console.dir(error));
+    console.log("registration successfully", newUser);
   };
   const handleGoogleSignIn = () => {
     console.log("google sign");
