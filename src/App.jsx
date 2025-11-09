@@ -1,9 +1,12 @@
+import { Outlet } from "react-router";
 import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <>
-      <h1>Utility Bill Management System</h1>
+      <h1>App</h1>
     </>
   );
 }
