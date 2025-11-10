@@ -3,20 +3,25 @@ import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 
 const LoginPage = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    signInUser(email, password).then((res) => {
-      console.log(email);
-    });
-    navigate("/");
+    signInUser(email, password)
+      .then((res) => {
+        console.log(res.user.displayName);
+        navigate("/");
+      })
+      .catch((err) => console.log(err.message));
+
     console.log("login successfully");
   };
   const handleGoogleSignIn = () => {
-    console.log("google sign in");
+    signInWithGoogle()
+      .then((result) => console.log(result.user))
+      .catch((error) => console.log(error.message));
   };
   return (
     <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl mt-15 py-10">
