@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Navbar from "../components/Headers/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../components/Footer/Footer";

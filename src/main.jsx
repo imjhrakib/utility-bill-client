@@ -11,6 +11,8 @@ import MyProfile from "./layouts/MyProfile.jsx";
 import LoginPage from "./components/LoginPage/LoginPage.jsx";
 import RegistrationPage from "./components/RegistrationPage/RegistrationPage.jsx";
 import AuthProvider from "./provider/AuthProvider.jsx";
+import PrivateRoute from "./PrivateRoutes/PrivateRoutes.jsx";
+import NotFoundPage from "./NotFound/NotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +29,19 @@ const router = createBrowserRouter([
       },
       {
         path: "myPayBills",
-        element: <MyPayBills></MyPayBills>,
+        element: (
+          <PrivateRoute>
+            <MyPayBills></MyPayBills>
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
-        element: <MyProfile></MyProfile>,
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "login",
@@ -42,6 +52,10 @@ const router = createBrowserRouter([
         element: <RegistrationPage></RegistrationPage>,
       },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFoundPage,
   },
 ]);
 

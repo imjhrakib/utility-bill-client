@@ -20,14 +20,14 @@ const Navbar = () => {
       <li>
         <NavLink to={"/bills"}>Bills</NavLink>
       </li>
+
       {user && (
-        <li>
-          <NavLink to={"/myPayBills"}>My Pay Bills</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to={"/myPayBills"}>My Pay Bills</NavLink>
+          </li>
+        </>
       )}
-      <li>
-        <NavLink to={"/profile"}>Profile</NavLink>
-      </li>
     </>
   );
   return (
@@ -70,14 +70,25 @@ const Navbar = () => {
           </div>
           <div>
             {user ? (
-              <NavLink>
-                <button
-                  onClick={handleLogOut}
-                  className="btn btn-outline btn-error"
-                >
-                  LogOut
-                </button>
-              </NavLink>
+              <div className="flex gap-3.5">
+                <li className="flex">
+                  <NavLink to={"/profile"}>
+                    <img
+                      src={user?.photoURL || "/default-profile.png"} // fallback if no photo
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
+                    />
+                  </NavLink>
+                </li>
+                <NavLink>
+                  <button
+                    onClick={handleLogOut}
+                    className="btn btn-outline btn-error"
+                  >
+                    LogOut
+                  </button>
+                </NavLink>
+              </div>
             ) : (
               <div className="flex gap-2.5">
                 <NavLink to={"/login"}>
