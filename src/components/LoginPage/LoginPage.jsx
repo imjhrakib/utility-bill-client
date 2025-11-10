@@ -1,9 +1,18 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../../provider/AuthContext";
 
 const LoginPage = () => {
+  const { signInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signInUser(email, password).then((res) => {
+      console.log(email);
+    });
+    navigate("/");
     console.log("login successfully");
   };
   const handleGoogleSignIn = () => {

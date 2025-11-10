@@ -10,14 +10,14 @@ const slides = [
     id: 1,
     title: "Pay your electricity bills instantly!",
     description: "Fast, secure, and convenient payment anytime, anywhere.",
-    image: "https://i.ibb.co.com/4nFY3B6F/water.jpg",
+    image: "https://i.ibb.co.com/4n6sNwKY/electricity.jpg",
   },
   {
     id: 2,
     title: "Manage your water bills online",
     description:
       "Track your usage and pay your water bills in just a few clicks.",
-    image: "https://i.ibb.co.com/4n6sNwKY/electricity.jpg",
+    image: "https://i.ibb.co.com/4nFY3B6F/water.jpg",
   },
   {
     id: 3,
