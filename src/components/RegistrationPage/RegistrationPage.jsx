@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import { updateProfile } from "firebase/auth";
@@ -6,22 +6,32 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 const RegistrationPage = () => {
+  const pattern = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
   const navigate = useNavigate();
   const { user, setUser, createUser, signInWithGoogle } =
     useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photoUrl = e.target.photo.value;
+    const password = e.target.password.value;
+    const newUser = {
+      name,
+      email,
+      password,
+      photoUrl,
+    };
+
+    if (!pattern.test(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Password",
+        text: "Password must contain at least 1 uppercase, 1 lowercase letter and be 6+ characters long.",
+      });
+      return;
+    }
     if (user == null) {
-      const name = e.target.name.value;
-      const email = e.target.email.value;
-      const photoUrl = e.target.photo.value;
-      const password = e.target.password.value;
-      const newUser = {
-        name,
-        email,
-        password,
-        photoUrl,
-      };
       createUser(email, password)
         .then((result) => {
           const user = result.user;
