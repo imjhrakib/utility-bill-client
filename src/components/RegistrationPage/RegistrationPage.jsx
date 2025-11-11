@@ -1,38 +1,74 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const RegistrationPage = () => {
-  const { user, createUser, signInWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, setUser, createUser, signInWithGoogle } =
+    useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const photoUrl = e.target.photo.value;
-    const password = e.target.password.value;
-    const newUser = {
-      name,
-      email,
-      password,
-      photoUrl,
-    };
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        updateProfile(user, {
-          displayName: name,
-          photoURL: photoUrl,
+    if (user == null) {
+      const name = e.target.name.value;
+      const email = e.target.email.value;
+      const photoUrl = e.target.photo.value;
+      const password = e.target.password.value;
+      const newUser = {
+        name,
+        email,
+        password,
+        photoUrl,
+      };
+      createUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          updateProfile(user, {
+            displayName: name,
+            photoURL: photoUrl,
+          });
+          navigate("/");
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "info", // icon type: 'success', 'error', 'info', etc.
+            title: "Already Logged In",
+            text: `${error.message}`,
+            confirmButtonText: "OK",
+          });
         });
-      })
-      .catch((error) => console.dir(error));
-    console.log("registration successfully", newUser);
+    } else {
+      Swal.fire({
+        icon: "info",
+        title: "Already Logged In",
+        text: "You are already logged in, please log out first to register a new account.",
+        confirmButtonText: "OK",
+      });
+    }
   };
   const handleGoogleSignIn = () => {
-    console.log("google sign");
+    if (user == null) {
+      signInWithGoogle()
+        .then((result) => {
+          setUser(result.user);
+        })
+        .catch((error) => console.log(error.message));
+    } else {
+      Swal.fire({
+        icon: "info", // icon type: 'success', 'error', 'info', etc.
+        title: "Already Logged In",
+        text: "You are already logged in, please log out first to register a new account.",
+        confirmButtonText: "OK",
+      });
+    }
   };
   return (
     <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl p-5 my-10">
+      <Helmet>
+        <title>Register || TrustBill</title>
+      </Helmet>
       <h1 className="text-5xl font-bold mx-auto mb-2">Register now!</h1>
       <h4 className="mx-auto">
         Already have an account?{" "}

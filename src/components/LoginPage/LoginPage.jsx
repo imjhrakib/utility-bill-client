@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const LoginPage = () => {
   const { user, setUser, signInUser, signInWithGoogle } =
@@ -17,11 +19,21 @@ const LoginPage = () => {
           console.log(res.user.displayName);
           navigate("/");
         })
-        .catch((err) => console.log(err.message));
-
-      console.log("login successfully");
+        .catch((err) => {
+          Swal.fire({
+            icon: "info", // icon type: 'success', 'error', 'info', etc.
+            title: `${err.message}`,
+            // text: `${err.message}`,
+            confirmButtonText: "OK",
+          });
+        });
     } else {
-      console.log("already exist");
+      Swal.fire({
+        icon: "info", // icon type: 'success', 'error', 'info', etc.
+        title: "Already Logged In",
+        text: "You are already logged in, please log out first to register a new account.",
+        confirmButtonText: "OK",
+      });
     }
   };
   const handleGoogleSignIn = () => {
@@ -29,12 +41,23 @@ const LoginPage = () => {
       signInWithGoogle()
         .then((result) => {
           setUser(result.user);
+          navigate("/");
         })
         .catch((error) => console.log(error.message));
+    } else {
+      Swal.fire({
+        icon: "info", // icon type: 'success', 'error', 'info', etc.
+        title: "Already Logged In",
+        text: "You are already logged in, please log out first to register a new account.",
+        confirmButtonText: "OK",
+      });
     }
   };
   return (
     <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl mt-15 py-10">
+      <Helmet>
+        <title>Login || TrustBill</title>
+      </Helmet>
       <h1 className="text-5xl text-center font-bold">Login</h1>
       <h4 className="text-center mt-2.5">
         Don't have an account?{" "}

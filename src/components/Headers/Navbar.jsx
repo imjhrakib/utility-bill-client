@@ -1,15 +1,27 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogOut = () => {
-    signOutUser().then(() => {
-      setUser(null);
-      navigate("/");
-      console.log("signOut successfully");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser().then(() => {
+          setUser(null);
+          navigate("/");
+        });
+      }
     });
   };
   const links = (

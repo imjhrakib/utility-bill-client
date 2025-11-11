@@ -3,10 +3,14 @@ import HeroSection from "../components/Headers/HeroSection";
 import CategorySection from "../components/CategorySection/CategorySection";
 import Features from "../components/Features/Features";
 import Reviews from "../components/Reviews/Reviews";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   return (
     <div>
+      <Helmet>
+        <title>Home || TrustBill</title>
+      </Helmet>
       <HeroSection></HeroSection>
       <CategorySection></CategorySection>
       <Features></Features>

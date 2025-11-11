@@ -12,7 +12,7 @@ import {
 const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const createUser = (email, password) => {
     setUser(user);
     setLoading(true);
@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         console.log("currentUser from onAuthStateChanged", currentUser);
         setUser(currentUser);
+        setLoading(false);
       }
       //   if (currentUser) {
       //     const loggedUser = { email: currentUser.email };

@@ -13,6 +13,8 @@ import RegistrationPage from "./components/RegistrationPage/RegistrationPage.jsx
 import AuthProvider from "./provider/AuthProvider.jsx";
 import PrivateRoute from "./PrivateRoutes/PrivateRoutes.jsx";
 import NotFoundPage from "./NotFound/NotFound.jsx";
+import { HelmetProvider } from "react-helmet-async";
+import BillsDetails from "./layouts/BillsDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "bills",
-        element: <Bills></Bills>,
+        element: <BillsDetails></BillsDetails>,
       },
       {
         path: "myPayBills",
@@ -61,8 +63,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </StrictMode>
 );
