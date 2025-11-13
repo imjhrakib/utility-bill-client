@@ -4,14 +4,16 @@ import { useLoaderData, useNavigate } from "react-router";
 
 const Bills = () => {
   const bills = useLoaderData();
-  console.log(bills);
+
   const [category, setCategory] = useState("all");
   const navigate = useNavigate();
 
   const filteredBills =
     category === "all"
       ? bills
-      : bills.filter((bill) => bill.category === category);
+      : bills.filter(
+          (bill) => bill.category.toLowerCase() === category.toLowerCase()
+        );
 
   return (
     <div>

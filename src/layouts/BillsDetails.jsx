@@ -50,7 +50,7 @@ const BillsDetails = () => {
       body: JSON.stringify(myBills),
     })
       .then((res) => res.json())
-      .then((data) => console.log("bills details", data));
+      .then((data) => console.log("data"));
   };
 
   return (
