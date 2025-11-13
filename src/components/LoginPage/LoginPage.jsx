@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
@@ -7,6 +7,9 @@ import { Helmet } from "react-helmet-async";
 const LoginPage = () => {
   const { user, setUser, signInUser, signInWithGoogle } =
     useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,8 +19,7 @@ const LoginPage = () => {
       const password = e.target.password.value;
       signInUser(email, password)
         .then((res) => {
-          console.log(res.user.displayName);
-          navigate("/");
+          navigate(from, { replace: true });
         })
         .catch((err) => {
           Swal.fire({

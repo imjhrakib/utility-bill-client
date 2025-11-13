@@ -26,24 +26,6 @@ const router = createBrowserRouter([
         index: true,
         Component: Home,
       },
-      // {
-      //   path: "/",
-      //   element: <RecentBills></RecentBills>,
-      //   loader: () =>
-      //     fetch("http://localhost:3000/bills").then((res) => res.json()),
-      // },
-      // {
-      //   path: "bills/:id",
-      //   element: (
-      //     <PrivateRoute>
-      //       <BillsDetails />
-      //     </PrivateRoute>
-      //   ),
-      //   loader: ({ params }) =>
-      //     fetch(`http://localhost:3000/bills/${params.id}`).then((res) =>
-      //       res.json()
-      //     ),
-      // },
       {
         path: "bills",
         element: <Bills></Bills>,

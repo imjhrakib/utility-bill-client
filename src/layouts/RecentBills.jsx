@@ -6,9 +6,9 @@ const RecentBills = ({ recentBillsPromise }) => {
   const recentBills = use(recentBillsPromise);
   return (
     <div className="my-10">
-      <h1 className="text-center font-bold text-4xl">Recent Bills</h1>
+      <h1 className="text-center font-bold text-4xl my-6">Recent Bills</h1>
       {/*Recent Bills Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mx-5">
         {recentBills.slice(0, 6).map((bill) => (
           <div
             key={bill._id}

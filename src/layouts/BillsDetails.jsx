@@ -6,7 +6,6 @@ import { useLoaderData } from "react-router";
 
 const BillsDetails = () => {
   const bill = useLoaderData();
-  console.log(bill);
   const { user } = useContext(AuthContext);
   // const billId = bill.find((b) => b.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +50,7 @@ const BillsDetails = () => {
       body: JSON.stringify(myBills),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log("bills details", data));
   };
 
   return (
