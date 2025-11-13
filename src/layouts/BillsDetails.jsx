@@ -2,75 +2,13 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const bills = [
-  {
-    id: 1,
-    title: "Electricity Bill - October",
-    category: "electricity",
-    location: "Dhaka",
-    amount: 120,
-    date: "2025-10-05",
-    image: "https://i.ibb.co/7r0Zg9p/electricity.jpg",
-    description: "Pay your October electricity bill on time.",
-  },
-  {
-    id: 2,
-    title: "Water Bill - October",
-    category: "water",
-    location: "Chittagong",
-    amount: 45,
-    date: "2025-10-10",
-    image: "https://i.ibb.co/HPbPNqS/water.jpg",
-    description: "Water supply charges for October.",
-  },
-  {
-    id: 3,
-    title: "Gas Bill - October",
-    category: "gas",
-    location: "Khulna",
-    amount: 70,
-    date: "2025-10-12",
-    image: "https://i.ibb.co/4mGt8XJ/gas.jpg",
-    description: "Gas usage charges for October.",
-  },
-  {
-    id: 4,
-    title: "Internet Bill - October",
-    category: "internet",
-    location: "Sylhet",
-    amount: 60,
-    date: "2025-10-15",
-    image: "https://i.ibb.co/d4WbZ0V/internet.jpg",
-    description: "High-speed internet charges for October.",
-  },
-  {
-    id: 5,
-    title: "Electricity Bill - November",
-    category: "electricity",
-    location: "Rajshahi",
-    amount: 130,
-    date: "2025-11-05",
-    image: "https://i.ibb.co/7r0Zg9p/electricity.jpg",
-    description: "Pay your November electricity bill on time.",
-  },
-  {
-    id: 6,
-    title: "Water Bill - November",
-    category: "water",
-    location: "Barisal",
-    amount: 50,
-    date: "2025-11-07",
-    image: "https://i.ibb.co/HPbPNqS/water.jpg",
-    description: "Water supply charges for November.",
-  },
-];
+import { useLoaderData } from "react-router";
 
 const BillsDetails = () => {
-  const id = 5; // Example bill ID
+  const bill = useLoaderData();
+  console.log(bill);
   const { user } = useContext(AuthContext);
-
-  const bill = bills.find((b) => b.id === parseInt(id));
+  // const billId = bill.find((b) => b.id === parseInt(id));
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     username: user?.displayName || "",
@@ -79,7 +17,7 @@ const BillsDetails = () => {
     additionalInfo: "",
   });
 
-  if (!bill) return <h2 className="p-6 text-xl font-bold">Bill not found</h2>;
+  // if (!billId) return <h2 className="p-6 text-xl font-bold">Bill not found</h2>;
 
   const currentMonth = new Date().getMonth();
   const billMonth = new Date(bill.date).getMonth();
@@ -95,8 +33,8 @@ const BillsDetails = () => {
     toast.success("✅ Bill paid successfully!");
     setShowModal(false);
 
-    console.log({
-      billId: bill.id,
+    const myBills = {
+      billId: bill._id,
       email: user.email,
       amount: bill.amount,
       username: formData.username,
@@ -104,7 +42,16 @@ const BillsDetails = () => {
       phone: formData.phone,
       date: new Date().toLocaleDateString(),
       additionalInfo: formData.additionalInfo,
-    });
+    };
+    fetch("http://localhost:3000/myBills", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(myBills),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   return (
@@ -155,7 +102,7 @@ const BillsDetails = () => {
                 <label>Bill ID</label>
                 <input
                   type="text"
-                  value={bill.id}
+                  value={bill._id}
                   readOnly
                   className="w-full border p-2 rounded bg-gray-100"
                 />

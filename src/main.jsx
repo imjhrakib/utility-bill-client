@@ -15,6 +15,7 @@ import PrivateRoute from "./PrivateRoutes/PrivateRoutes.jsx";
 import NotFoundPage from "./NotFound/NotFound.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import BillsDetails from "./layouts/BillsDetails.jsx";
+import RecentBills from "./layouts/RecentBills.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +26,43 @@ const router = createBrowserRouter([
         index: true,
         Component: Home,
       },
+      // {
+      //   path: "/",
+      //   element: <RecentBills></RecentBills>,
+      //   loader: () =>
+      //     fetch("http://localhost:3000/bills").then((res) => res.json()),
+      // },
+      // {
+      //   path: "bills/:id",
+      //   element: (
+      //     <PrivateRoute>
+      //       <BillsDetails />
+      //     </PrivateRoute>
+      //   ),
+      //   loader: ({ params }) =>
+      //     fetch(`http://localhost:3000/bills/${params.id}`).then((res) =>
+      //       res.json()
+      //     ),
+      // },
       {
         path: "bills",
-        element: <BillsDetails></BillsDetails>,
+        element: <Bills></Bills>,
+        loader: () =>
+          fetch("http://localhost:3000/bills").then((res) => res.json()),
       },
+      {
+        path: "bills/:id",
+        element: (
+          <PrivateRoute>
+            <BillsDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/bills/${params.id}`).then((res) =>
+            res.json()
+          ),
+      },
+
       {
         path: "myPayBills",
         element: (
