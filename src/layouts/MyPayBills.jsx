@@ -127,57 +127,65 @@ const MyPayBills = () => {
         Download Report
       </button>
 
-      <table className="table-auto w-full text-center border">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-2 py-1">Username</th>
-            <th className="border border-gray-300 px-2 py-1">Email</th>
-            <th className="border border-gray-300 px-2 py-1">Amount</th>
-            <th className="border border-gray-300 px-2 py-1">Address</th>
-            <th className="border border-gray-300 px-2 py-1">Phone</th>
-            <th className="border border-gray-300 px-2 py-1">Date</th>
-            <th className="border border-gray-300 px-2 py-1">Update</th>
-            <th className="border border-gray-300 px-2 py-1">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bills.map((bill) => (
-            <tr key={bill._id}>
-              <td className="border border-gray-300 px-2 py-1">
-                {bill.username}
-              </td>
-              <td className="border border-gray-300 px-2 py-1">{bill.email}</td>
-              <td className="border border-gray-300 px-2 py-1">
-                {bill.amount}
-              </td>
-              <td className="border border-gray-300 px-2 py-1">
-                {bill.address}
-              </td>
-              <td className="border border-gray-300 px-2 py-1">{bill.phone}</td>
-              <td className="border border-gray-300 px-2 py-1">{bill.date}</td>
-              <td className="border border-gray-300 px-2 py-1">
-                <button
-                  className="btn btn-soft btn-accent"
-                  onClick={() => openUpdateModal(bill)}
-                >
-                  Update
-                </button>
-              </td>
-              <td className="border border-gray-300 px-2 py-1">
-                <button
-                  className="btn btn-soft btn-warning"
-                  onClick={() => {
-                    setSelectedBill(bill);
-                    setShowDeleteModal(true);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full text-center border">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-2 py-1">Username</th>
+              <th className="border border-gray-300 px-2 py-1">Email</th>
+              <th className="border border-gray-300 px-2 py-1">Amount</th>
+              <th className="border border-gray-300 px-2 py-1">Address</th>
+              <th className="border border-gray-300 px-2 py-1">Phone</th>
+              <th className="border border-gray-300 px-2 py-1">Date</th>
+              <th className="border border-gray-300 px-2 py-1">Update</th>
+              <th className="border border-gray-300 px-2 py-1">Delete</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {bills.map((bill) => (
+              <tr key={bill._id}>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.username}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.email}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.amount}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.address}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.phone}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  {bill.date}
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  <button
+                    className="btn btn-soft btn-accent"
+                    onClick={() => openUpdateModal(bill)}
+                  >
+                    Update
+                  </button>
+                </td>
+                <td className="border border-gray-300 px-2 py-1">
+                  <button
+                    className="btn btn-soft btn-warning"
+                    onClick={() => {
+                      setSelectedBill(bill);
+                      setShowDeleteModal(true);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Update Modal */}
       {showUpdateModal && (
