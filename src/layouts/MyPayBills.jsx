@@ -23,7 +23,7 @@ const MyPayBills = () => {
   useEffect(() => {
     if (!user) return;
     setLoading(true);
-    fetch(`http://localhost:3000/myBills?email=${user.email}`)
+    fetch(`https://utility-bill-server.vercel.app/myBills?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -60,11 +60,14 @@ const MyPayBills = () => {
   // Submit update
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/myBills/${selectedBill._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
+    fetch(
+      `https://utility-bill-server.vercel.app/myBills/${selectedBill._id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -76,9 +79,12 @@ const MyPayBills = () => {
 
   // Delete bill
   const handleDelete = () => {
-    fetch(`http://localhost:3000/myBills/${selectedBill._id}`, {
-      method: "DELETE",
-    }).then(() => {
+    fetch(
+      `https://utility-bill-server.vercel.app/myBills/${selectedBill._id}`,
+      {
+        method: "DELETE",
+      }
+    ).then(() => {
       setBills(bills.filter((b) => b._id !== selectedBill._id));
       setShowDeleteModal(false);
     });

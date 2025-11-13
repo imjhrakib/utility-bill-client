@@ -42,7 +42,7 @@ const BillsDetails = () => {
       date: new Date().toLocaleDateString(),
       additionalInfo: formData.additionalInfo,
     };
-    fetch("http://localhost:3000/myBills", {
+    fetch("https://utility-bill-server.vercel.app/myBills", {
       method: "POST",
       headers: {
         "content-type": "application/json",

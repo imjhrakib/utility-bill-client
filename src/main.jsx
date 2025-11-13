@@ -30,7 +30,9 @@ const router = createBrowserRouter([
         path: "bills",
         element: <Bills></Bills>,
         loader: () =>
-          fetch("http://localhost:3000/bills").then((res) => res.json()),
+          fetch("https://utility-bill-server.vercel.app/bills").then((res) =>
+            res.json()
+          ),
       },
       {
         path: "bills/:id",
@@ -40,9 +42,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/bills/${params.id}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://utility-bill-server.vercel.app/bills/${params.id}`
+          ).then((res) => res.json()),
       },
 
       {

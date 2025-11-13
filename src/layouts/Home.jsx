@@ -5,9 +5,9 @@ import Features from "../components/Features/Features";
 import Reviews from "../components/Reviews/Reviews";
 import { Helmet } from "react-helmet-async";
 import RecentBills from "./RecentBills";
-const recentBillsPromise = fetch("http://localhost:3000/bills").then((res) =>
-  res.json()
-);
+const recentBillsPromise = fetch(
+  "https://utility-bill-server.vercel.app/bills"
+).then((res) => res.json());
 const Home = () => {
   return (
     <div>
