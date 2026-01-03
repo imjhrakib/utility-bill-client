@@ -17,7 +17,7 @@ const Bills = () => {
         );
 
   return (
-    <div>
+    <div className="pt-20">
       <Helmet>
         <title>Bills || TrustBill</title>
       </Helmet>
@@ -42,7 +42,7 @@ const Bills = () => {
         {/* Bills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {filteredBills.map((bill) => (
-            <BillCard bill={bill}></BillCard>
+            <BillCard bill={bill} key={bill._id}></BillCard>
           ))}
         </div>
       </div>

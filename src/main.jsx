@@ -18,6 +18,7 @@ import BillsDetails from "./layouts/BillsDetails.jsx";
 import RecentBills from "./layouts/RecentBills.jsx";
 import ThemeProvider from "./provider/ThemeProvider.jsx";
 import About from "./components/About/About.jsx";
+import Contact from "./components/Contact/Contact.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         Component: About,
+      },
+      {
+        path: "/contact",
+        Component: Contact,
       },
       {
         path: "bills/:id",

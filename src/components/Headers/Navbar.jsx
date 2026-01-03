@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import Swal from "sweetalert2";
@@ -8,8 +8,8 @@ import { BsBrightnessHigh } from "react-icons/bs";
 const Navbar = () => {
   const { user, signOutUser, setUser } = useContext(AuthContext);
   const { theme, toggleTheme, colors } = useContext(ThemeContext);
-
   const navigate = useNavigate();
+
   const handleLogOut = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -28,117 +28,158 @@ const Navbar = () => {
       }
     });
   };
+
   const links = (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink
+          to={"/"}
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+              : "hover:text-[#438A7A]"
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/bills"}>Bills</NavLink>
+        <NavLink
+          to={"/bills"}
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+              : "hover:text-[#438A7A]"
+          }
+        >
+          Bills
+        </NavLink>
       </li>
-
       {user && (
-        <>
-          <li>
-            <NavLink to={"/myPayBills"}>My Pay Bills</NavLink>
-          </li>
-        </>
+        <li>
+          <NavLink
+            to={"/myPayBills"}
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+                : "hover:text-[#438A7A]"
+            }
+          >
+            My Pay Bills
+          </NavLink>
+        </li>
       )}
       <li>
-        <NavLink to={"/about"}>About</NavLink>
+        <NavLink
+          to={"/about"}
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+              : "hover:text-[#438A7A]"
+          }
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={"/contact"}
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+              : "hover:text-[#438A7A]"
+          }
+        >
+          Contact
+        </NavLink>
       </li>
     </>
   );
+
   return (
-    <div>
-      <div
-        className={`navbar fixed top-0 left-0 z-50 text-gray-200 shadow-sm px-4 md:px-10 lg:px-20`}
-        style={{ backgroundColor: colors[theme].bg }}
-      >
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
-            </div>
-            <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-2 mt-3 w-52 p-2 shadow font-semibold"
+    <nav
+      className="fixed top-0 left-0 w-full z-50 shadow-md transition-colors"
+      style={{ backgroundColor: colors[theme].bgNav }}
+    >
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-10 lg:px-20 h-16">
+        {/* Mobile Dropdown */}
+        <div className="lg:hidden dropdown">
+          <label tabIndex={0} className="btn btn-ghost p-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {links}
-            </ul>
-          </div>
-          <NavLink to={"/"} className="btn btn-ghost text-xl">
-            TrustBill
-          </NavLink>
-        </div>
-
-        <div className="navbar-end flex gap-10">
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 font-semibold">{links}</ul>
-          </div>
-          <div
-            onClick={toggleTheme}
-            className="cursor-pointer p-2 rounded hover:bg-gray-200/10"
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-4 shadow rounded-box w-52 mt-2 bg-white dark:bg-gray-800 text-black dark:text-gray-200"
           >
-            <BsBrightnessHigh size={18} />
-          </div>
+            {links}
+          </ul>
+        </div>
+        {/* Logo */}
+        <NavLink to={"/"} className="text-xl font-bold text-[#438A7A]">
+          TrustBill
+        </NavLink>
 
-          <div>
-            {user ? (
-              <div className="flex gap-3.5">
-                <li className="flex">
-                  <NavLink to={"/profile"}>
-                    <img
-                      src={user?.photoURL || "/default-profile.png"} // fallback if no photo
-                      alt="Profile"
-                      className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
-                    />
-                  </NavLink>
-                </li>
-                <NavLink>
-                  <button
-                    onClick={handleLogOut}
-                    className="btn btn-outline btn-error"
-                  >
-                    LogOut
-                  </button>
-                </NavLink>
-              </div>
-            ) : (
-              <div className="flex gap-2.5">
-                {/* Login button - solid */}
-                <NavLink to={"/login"}>
-                  <button className="px-4 py-2 rounded-md bg-[#438A7A] text-white hover:bg-[#3A7669] transition font-medium">
-                    Login
-                  </button>
-                </NavLink>
+        {/* Desktop Links */}
+        <ul className="hidden lg:flex gap-8 items-center">{links}</ul>
 
-                {/* Register button - outline */}
-                <NavLink to={"/register"}>
-                  <button className="px-4 py-2 rounded-md border border-[#438A7A] text-[#438A7A] hover:bg-[#438A7A] hover:text-white transition font-medium">
-                    Register
-                  </button>
-                </NavLink>
-              </div>
-            )}
-          </div>
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded hover:bg-gray-200/20 transition"
+            title="Toggle Theme"
+          >
+            <BsBrightnessHigh size={20} />
+          </button>
+
+          {/* Auth Buttons */}
+          {user ? (
+            <div className="flex items-center gap-4">
+              <NavLink to={"/profile"}>
+                <img
+                  src={user.photoURL || "/default-profile.png"}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
+                />
+              </NavLink>
+              <button
+                onClick={handleLogOut}
+                className="px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              <NavLink to={"/login"}>
+                <button className="px-4 py-2 rounded-md bg-[#438A7A] text-white hover:bg-[#3A7669] transition">
+                  Login
+                </button>
+              </NavLink>
+              <NavLink to={"/register"}>
+                <button className="px-4 py-2 rounded-md border border-[#438A7A] text-[#438A7A] hover:bg-[#438A7A] hover:text-white transition">
+                  Register
+                </button>
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
