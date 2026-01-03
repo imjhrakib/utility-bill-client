@@ -29,7 +29,7 @@ const slides = [
 
 const HeroSection = () => {
   return (
-    <div className="max-w-6xl mx-auto mt-6 rounded-xl shadow-lg overflow-hidden px-5">
+    <div className="max-w-6xl pt-20 mx-auto rounded-xl shadow-lg overflow-hidden px-5">
       <Swiper
         className="rounded-2xl"
         modules={[Pagination, Navigation, Autoplay]}

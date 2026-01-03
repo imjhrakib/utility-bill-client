@@ -16,6 +16,8 @@ import NotFoundPage from "./NotFound/NotFound.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import BillsDetails from "./layouts/BillsDetails.jsx";
 import RecentBills from "./layouts/RecentBills.jsx";
+import ThemeProvider from "./provider/ThemeProvider.jsx";
+import About from "./components/About/About.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
           fetch("https://utility-bill-server.vercel.app/bills").then((res) =>
             res.json()
           ),
+      },
+      {
+        path: "about",
+        Component: About,
       },
       {
         path: "bills/:id",
@@ -83,7 +89,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HelmetProvider>
       <AuthProvider>
-        <RouterProvider router={router}></RouterProvider>
+        <ThemeProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </ThemeProvider>
       </AuthProvider>
     </HelmetProvider>
   </StrictMode>

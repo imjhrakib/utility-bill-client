@@ -2,9 +2,13 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import Swal from "sweetalert2";
+import { ThemeContext } from "../../provider/ThemeContext";
+import { BsBrightnessHigh } from "react-icons/bs";
 
 const Navbar = () => {
   const { user, signOutUser, setUser } = useContext(AuthContext);
+  const { theme, toggleTheme, colors } = useContext(ThemeContext);
+
   const navigate = useNavigate();
   const handleLogOut = () => {
     Swal.fire({
@@ -40,11 +44,17 @@ const Navbar = () => {
           </li>
         </>
       )}
+      <li>
+        <NavLink to={"/about"}>About</NavLink>
+      </li>
     </>
   );
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm px-4 md:px-10 lg:px-20">
+      <div
+        className={`navbar fixed top-0 left-0 z-50 text-gray-200 shadow-sm px-4 md:px-10 lg:px-20`}
+        style={{ backgroundColor: colors[theme].bg }}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,7 +76,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-2 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-2 mt-3 w-52 p-2 shadow font-semibold"
             >
               {links}
             </ul>
@@ -78,8 +88,15 @@ const Navbar = () => {
 
         <div className="navbar-end flex gap-10">
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{links}</ul>
+            <ul className="menu menu-horizontal px-1 font-semibold">{links}</ul>
           </div>
+          <div
+            onClick={toggleTheme}
+            className="cursor-pointer p-2 rounded hover:bg-gray-200/10"
+          >
+            <BsBrightnessHigh size={18} />
+          </div>
+
           <div>
             {user ? (
               <div className="flex gap-3.5">
@@ -103,11 +120,16 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex gap-2.5">
+                {/* Login button - solid */}
                 <NavLink to={"/login"}>
-                  <button className="btn btn-outline btn-success">Login</button>
+                  <button className="px-4 py-2 rounded-md bg-[#438A7A] text-white hover:bg-[#3A7669] transition font-medium">
+                    Login
+                  </button>
                 </NavLink>
+
+                {/* Register button - outline */}
                 <NavLink to={"/register"}>
-                  <button className="btn btn-outline btn-primary">
+                  <button className="px-4 py-2 rounded-md border border-[#438A7A] text-[#438A7A] hover:bg-[#438A7A] hover:text-white transition font-medium">
                     Register
                   </button>
                 </NavLink>

@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
+import BillCard from "../components/BillCard";
 
 const Bills = () => {
   const bills = useLoaderData();
@@ -39,28 +40,9 @@ const Bills = () => {
           </select>
         </div>
         {/* Bills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {filteredBills.map((bill) => (
-            <div
-              key={bill._id}
-              className="border p-4 rounded shadow hover:shadow-lg transition"
-            >
-              <img
-                src={bill.image}
-                alt={bill.title}
-                className="w-full h-40 object-cover rounded mb-2"
-              />
-              <h2 className="text-xl font-bold">{bill.title}</h2>
-              <p>Category: {bill.category}</p>
-              <p>Location: {bill.location}</p>
-              <p>Amount: ${bill.amount}</p>
-              <button
-                onClick={() => navigate(`/bills/${bill._id}`)}
-                className="mt-2 w-full py-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
-              >
-                See Details
-              </button>
-            </div>
+            <BillCard bill={bill}></BillCard>
           ))}
         </div>
       </div>

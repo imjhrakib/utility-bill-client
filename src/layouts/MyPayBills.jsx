@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Helmet } from "react-helmet-async";
 
 const MyPayBills = () => {
   const { user } = useContext(AuthContext);
@@ -126,6 +127,11 @@ const MyPayBills = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>
+          My PayBills || TrustBill
+        </title>
+      </Helmet>
       <h2 className="text-xl font-bold mb-2">
         Total Bills Paid: {totalBills} | Total Amount: ৳{totalAmount}
       </h2>
