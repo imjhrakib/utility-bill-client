@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
+import { useNavigate } from "react-router";
 
 const categories = [
   {
@@ -24,14 +26,23 @@ const categories = [
 ];
 
 const CategorySection = () => {
+  const { theme, colors } = useContext(ThemeContext);
+  const cardBg = theme === "dark" ? "#1F2225" : "#F9FAFB";
+  const borderColor = theme === "dark" ? "#33383F" : "#E5E7EB";
+  const textColor = theme === "dark" ? "text-gray-200" : "text-gray-900";
+  const navigate = useNavigate();
   return (
-    <div className="max-w-6xl mx-auto mt-16 px-5">
-      <h2 className="text-4xl font-bold text-center mb-10">Our Categories</h2>
+    <div className="mt-16 px-5 mb-16">
+      <h2 className={`text-4xl font-bold text-center mb-10 ${textColor}`}>
+        Our Categories
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {categories.map((category) => (
           <div
             key={category.id}
-            className="bg-gradient-to-tr from-white to-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col items-center p-6"
+            onClick={() => navigate("/bills")}
+            className={`rounded-2xl shadow-lg hover:shadow-2xl transform border  hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col items-center p-6`}
+            style={{ backgroundColor: cardBg, borderColor: borderColor }}
           >
             <div className="w-24 h-24 rounded-full overflow-hidden mb-4 shadow-inner">
               <img
@@ -40,7 +51,9 @@ const CategorySection = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+            <h3
+              className={`text-xl font-semibold hover:text-${colors.primary} transition-colors duration-300 ${textColor}`}
+            >
               {category.name}
             </h3>
           </div>
