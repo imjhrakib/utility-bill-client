@@ -3,10 +3,11 @@ import { AuthContext } from "../context/AuthContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Helmet } from "react-helmet-async";
+import { ThemeContext } from "../context/ThemeContext";
 
 const MyPayBills = () => {
   const { user } = useContext(AuthContext);
-  
+
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBill, setSelectedBill] = useState(null);
@@ -19,7 +20,7 @@ const MyPayBills = () => {
     phone: "",
     date: "",
   });
-
+  const { theme } = useContext(ThemeContext);
   // Fetch bills for current user
   useEffect(() => {
     if (!user) return;
@@ -123,7 +124,7 @@ const MyPayBills = () => {
 
     doc.save("my_bills_report.pdf");
   };
-
+  const text = theme === "dark" ? "#FFFFFF" : "#000000";
   return (
     <div className="p-4 pt-25">
       <Helmet>
@@ -132,7 +133,11 @@ const MyPayBills = () => {
       <h2 className="text-xl font-bold mb-2">
         Total Bills Paid: {totalBills} | Total Amount: ৳{totalAmount}
       </h2>
-      <button onClick={downloadReport} className="btn btn-primary mb-4">
+      <button
+        onClick={downloadReport}
+        className="btn bg-[#438A7A] border-none mb-4"
+        style={{ color: text }}
+      >
         Download Report
       </button>
 

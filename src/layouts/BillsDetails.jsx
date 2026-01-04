@@ -1,13 +1,14 @@
-import React, { useContext, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useContext, useState } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const BillsDetails = () => {
   const bill = useLoaderData();
-  const { user } = useContext(AuthContext);
-  // const billId = bill.find((b) => b.id === parseInt(id));
+  const { user } = useContext(AuthContext) || {};
+  const { theme, colors } = useContext(ThemeContext);
+
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     username: user?.displayName || "",
@@ -16,19 +17,22 @@ const BillsDetails = () => {
     additionalInfo: "",
   });
 
-  // if (!billId) return <h2 className="p-6 text-xl font-bold">Bill not found</h2>;
+  const bg = theme === "dark" ? "#1F2225" : "#F9FAFB";
+  const cardBg = theme === "dark" ? "#2A2E33" : "#FFFFFF";
+  const border = theme === "dark" ? "#33383F" : "#E5E7EB";
+  const text = theme === "dark" ? "text-gray-200" : "text-gray-900";
+  const muted = theme === "dark" ? "text-gray-400" : "text-gray-600";
 
-  const currentMonth = new Date().getMonth();
-  const billMonth = new Date(bill.date).getMonth();
-  const canPay = currentMonth === billMonth;
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handlePay = (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("❌ Please login to pay!");
+      return;
+    }
+
     toast.success("✅ Bill paid successfully!");
     setShowModal(false);
 
@@ -42,141 +46,129 @@ const BillsDetails = () => {
       date: new Date().toLocaleDateString(),
       additionalInfo: formData.additionalInfo,
     };
+
     fetch("https://utility-bill-server.vercel.app/myBills", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: { "content-type": "application/json" },
       body: JSON.stringify(myBills),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("data"));
+    });
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">{bill.title}</h1>
-      <img src={bill.image} alt={bill.title} className="w-full max-w-md mb-4" />
-      <p>
-        <strong>Category:</strong> {bill.category}
-      </p>
-      <p>
-        <strong>Location:</strong> {bill.location}
-      </p>
-      <p>
-        <strong>Amount:</strong> ${bill.amount}
-      </p>
-      <p>
-        <strong>Description:</strong> {bill.description}
-      </p>
-
-      <button
-        onClick={() => setShowModal(true)}
-        className={`mt-4 py-2 px-4 rounded text-white ${
-          canPay
-            ? "bg-green-500 hover:bg-green-600"
-            : "bg-gray-400 cursor-not-allowed"
-        }`}
-        disabled={!canPay}
+    <div className="py-10 pt-20 px-4" style={{ backgroundColor: bg }}>
+      <div
+        className="max-w-4xl mx-auto rounded-2xl shadow-lg border p-6"
+        style={{ backgroundColor: cardBg, borderColor: border }}
       >
-        {canPay ? "Pay Bill" : "Pay Only Current Month Bills"}
-      </button>
+        <img
+          src={bill.image}
+          alt={bill.title}
+          className="w-full h-64 object-cover rounded-xl mb-6"
+        />
 
-      {/* Scrollable Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded shadow-lg w-full max-w-lg h-[80vh] overflow-y-auto p-6 mx-2">
-            <h2 className="text-xl font-bold mb-4">Pay Bill</h2>
-            <form onSubmit={handlePay} className="space-y-3">
-              <div>
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={user.email}
-                  readOnly
-                  className="w-full border p-2 rounded bg-gray-100"
-                />
-              </div>
-              <div>
-                <label>Bill ID</label>
-                <input
-                  type="text"
-                  value={bill._id}
-                  readOnly
-                  className="w-full border p-2 rounded bg-gray-100"
-                />
-              </div>
-              <div>
-                <label>Amount</label>
-                <input
-                  type="text"
-                  value={bill.amount}
-                  readOnly
-                  className="w-full border p-2 rounded bg-gray-100"
-                />
-              </div>
-              <div>
-                <label>Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                  className="w-full border p-2 rounded"
-                />
-              </div>
-              <div>
-                <label>Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                  className="w-full border p-2 rounded"
-                />
-              </div>
-              <div>
-                <label>Phone</label>
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full border p-2 rounded"
-                />
-              </div>
-              <div>
-                <label>Additional Info</label>
-                <textarea
-                  name="additionalInfo"
-                  value={formData.additionalInfo}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                />
-              </div>
+        <h1 className={`text-3xl font-bold mb-4 ${text}`}>{bill.title}</h1>
 
-              <div className="flex justify-end gap-2 mt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-3 py-1 rounded border"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-3 py-1 rounded bg-blue-500 text-white"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+        <div className={`space-y-2 ${muted}`}>
+          <p>
+            <span className="font-medium">Category:</span> {bill.category}
+          </p>
+          <p>
+            <span className="font-medium">Location:</span> {bill.location}
+          </p>
+          <p>
+            <span className="font-medium">Amount:</span> ${bill.amount}
+          </p>
+          <p>
+            <span className="font-medium">Description:</span> {bill.description}
+          </p>
         </div>
-      )}
+
+        {/* Pay Button */}
+        <button
+          onClick={() => {
+            if (!user) {
+              toast.error("❌ Please login to pay!");
+              return;
+            }
+            setShowModal(true);
+          }}
+          className="mt-6 w-full py-3 rounded-xl bg-[#438A7A] text-white font-medium transition hover:opacity-90"
+        >
+          Pay Bill
+        </button>
+      </div>
+
+      {showModal &&
+        user && ( // only show modal if user is logged in
+          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
+            <div
+              className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl p-6"
+              style={{ backgroundColor: cardBg }}
+            >
+              <h2 className={`text-xl font-bold mb-4 ${text}`}>Pay Bill</h2>
+
+              <form onSubmit={handlePay} className="space-y-3">
+                {[
+                  ["Email", user.email, true],
+                  ["Bill ID", bill._id, true],
+                  ["Amount", bill.amount, true],
+                ].map(([label, value, readOnly], i) => (
+                  <div key={i}>
+                    <label className={`text-sm ${muted}`}>{label}</label>
+                    <input
+                      value={value}
+                      readOnly={readOnly}
+                      className="w-full mt-1 p-2 rounded border bg-gray-100"
+                      style={{ backgroundColor: cardBg, borderColor: border }}
+                    />
+                  </div>
+                ))}
+
+                {["username", "address", "phone"].map((field) => (
+                  <div key={field}>
+                    <label className={`text-sm capitalize ${muted}`}>
+                      {field}
+                    </label>
+                    <input
+                      name={field}
+                      required
+                      value={formData[field]}
+                      onChange={handleChange}
+                      className="w-full mt-1 p-2 rounded border"
+                    />
+                  </div>
+                ))}
+
+                <div>
+                  <label className={`text-sm ${muted}`}>Additional Info</label>
+                  <textarea
+                    name="additionalInfo"
+                    value={formData.additionalInfo}
+                    onChange={handleChange}
+                    className="w-full mt-1 p-2 rounded border"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-3 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 rounded border"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={handlePay}
+                    className="px-4 py-2 cursor-pointer rounded text-white bg-[#438A7A]"
+                  >
+                    Confirm Pay
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
       <ToastContainer position="top-right" autoClose={2000} />
     </div>

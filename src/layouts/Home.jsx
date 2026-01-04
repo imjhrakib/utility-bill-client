@@ -8,6 +8,11 @@ import RecentBills from "./RecentBills";
 import Statistics from "./Statistics";
 import BtnPrimary from "../components/ui/BtnPrimary";
 import { useNavigate } from "react-router";
+import SponsorSection from "./SponsorSection";
+import HowItWorks from "./HowItWorks";
+import SecuritySection from "./SecuritySection";
+import SupportSection from "./SupportSection";
+import FAQSection from "./FAQSection";
 const recentBillsPromise = fetch(
   "https://utility-bill-server.vercel.app/bills"
 ).then((res) => res.json());
@@ -25,7 +30,12 @@ const Home = () => {
       </div>
       <CategorySection></CategorySection>
       <Features></Features>
+      <HowItWorks></HowItWorks>
+      <SecuritySection></SecuritySection>
       <Reviews></Reviews>
+      <FAQSection></FAQSection>
+      <SponsorSection></SponsorSection>
+      <SupportSection></SupportSection>
       <Statistics></Statistics>
     </div>
   );
