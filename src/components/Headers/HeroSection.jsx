@@ -1,64 +1,79 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { NavLink } from "react-router";
 
 const slides = [
   {
     id: 1,
-    title: "Pay your electricity bills instantly!",
+    title: "Pay Your Electricity Bills Instantly",
     description: "Fast, secure, and convenient payment anytime, anywhere.",
-    image: "https://i.ibb.co.com/4n6sNwKY/electricity.jpg",
+    image: "https://i.ibb.co/4n6sNwKY/electricity.jpg",
+    cta: "Pay Now",
   },
   {
     id: 2,
-    title: "Manage your water bills online",
+    title: "Manage Your Water Bills Online",
     description:
       "Track your usage and pay your water bills in just a few clicks.",
-    image: "https://i.ibb.co.com/4nFY3B6F/water.jpg",
+    image: "https://i.ibb.co/4nFY3B6F/water.jpg",
+    cta: "Pay Water Bill",
   },
   {
     id: 3,
-    title: "Internet and gas bills made easy",
+    title: "Internet & Gas Bills Made Easy",
     description: "One platform to pay all your utility bills hassle-free.",
-    image: "https://i.ibb.co.com/HLFTvSmD/gas.jpg",
+    image: "https://i.ibb.co/HLFTvSmD/gas.jpg",
+    cta: "Pay Now",
   },
 ];
 
 const HeroSection = () => {
   return (
-    <div className="max-w-6xl pt-25 mx-auto rounded-xl shadow-lg overflow-hidden px-5">
+    <section className="mx-auto rounded-xl overflow-hidden shadow-xl pt-20 h-[80vh] relative">
       <Swiper
-        className="rounded-2xl"
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Pagination, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
-        navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
-        loop={true}
+        loop
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div className="relative w-full h-64 sm:h-80 md:h-96">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0  flex flex-col justify-center items-center text-center text-white px-4">
-                <h2 className="text-2xl md:text-4xl font-bold mb-2">
+            <div className="relative w-full h-[70vh]">
+              {/* Background image with gradient overlay */}
+              <div className="absolute inset-0">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/40" />
+              </div>
+
+              {/* Overlay text */}
+              <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 sm:px-10 md:px-20">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">
                   {slide.title}
                 </h2>
-                <p className="text-sm md:text-lg">{slide.description}</p>
+                <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 md:mb-8 drop-shadow-md">
+                  {slide.description}
+                </p>
+                <NavLink
+                  to={"/bills"}
+                  className="px-6 py-3 bg-[#438A7A] hover:bg-[#3A7669] text-white rounded-lg text-lg font-medium shadow-lg transition"
+                >
+                  Pay Now
+                </NavLink>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 };
 

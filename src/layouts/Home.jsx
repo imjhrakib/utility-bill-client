@@ -5,6 +5,7 @@ import Features from "../components/Features/Features";
 import Reviews from "../components/Reviews/Reviews";
 import { Helmet } from "react-helmet-async";
 import RecentBills from "./RecentBills";
+import Statistics from "./Statistics";
 const recentBillsPromise = fetch(
   "https://utility-bill-server.vercel.app/bills"
 ).then((res) => res.json());
@@ -19,6 +20,7 @@ const Home = () => {
       <CategorySection></CategorySection>
       <Features></Features>
       <Reviews></Reviews>
+      <Statistics></Statistics>
     </div>
   );
 };
