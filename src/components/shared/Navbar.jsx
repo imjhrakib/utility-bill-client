@@ -107,11 +107,11 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+  const navBg = theme === "dark" ? "#2A2E33" : "#F9FAFB";
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 shadow-md transition-colors"
-      style={{ backgroundColor: colors[theme].bgNav }}
+      style={{ backgroundColor: navBg }}
     >
       <div className="flex justify-between items-center px-4 md:px-10 lg:px-20 h-16">
         {/* Mobile Dropdown */}

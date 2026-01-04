@@ -7,7 +7,7 @@ const BillCard = ({ bill }) => {
   const { theme, colors } = useContext(ThemeContext);
 
   // Colors based on theme
-  const bgColor = theme === "dark" ? "#1F2225" : "#F9FAFB";
+  const bgColor = theme === "dark" ? "#2A2E33" : "#F9FAFB";
   const borderColor = theme === "dark" ? "#33383F" : "#E5E7EB";
   const titleColor = theme === "dark" ? "text-white" : "text-gray-900";
   const labelColor = theme === "dark" ? "text-gray-400" : "text-gray-600";

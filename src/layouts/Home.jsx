@@ -6,10 +6,13 @@ import Reviews from "../components/Reviews/Reviews";
 import { Helmet } from "react-helmet-async";
 import RecentBills from "./RecentBills";
 import Statistics from "./Statistics";
+import BtnPrimary from "../components/ui/BtnPrimary";
+import { useNavigate } from "react-router";
 const recentBillsPromise = fetch(
   "https://utility-bill-server.vercel.app/bills"
 ).then((res) => res.json());
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Helmet>
@@ -17,6 +20,9 @@ const Home = () => {
       </Helmet>
       <HeroSection></HeroSection>
       <RecentBills recentBillsPromise={recentBillsPromise}></RecentBills>
+      <div className="flex justify-center " onClick={() => navigate("/bills")}>
+        <BtnPrimary btnText={"show all"}></BtnPrimary>
+      </div>
       <CategorySection></CategorySection>
       <Features></Features>
       <Reviews></Reviews>

@@ -1,9 +1,8 @@
 import React, { use } from "react";
-import { useLoaderData, useNavigate } from "react-router";
 import BillCard from "../components/ui/BillCard";
+import BtnPrimary from "../components/ui/BtnPrimary";
 
 const RecentBills = ({ recentBillsPromise }) => {
-  const navigate = useNavigate();
   const recentBills = use(recentBillsPromise);
   return (
     <div className="my-10">
@@ -14,6 +13,7 @@ const RecentBills = ({ recentBillsPromise }) => {
           <BillCard bill={bill} key={bill._id}></BillCard>
         ))}
       </div>
+      
     </div>
   );
 };

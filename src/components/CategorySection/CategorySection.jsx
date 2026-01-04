@@ -27,7 +27,7 @@ const categories = [
 
 const CategorySection = () => {
   const { theme, colors } = useContext(ThemeContext);
-  const cardBg = theme === "dark" ? "#1F2225" : "#F9FAFB";
+  const cardBg = theme === "dark" ? "#2A2E33" : "#F9FAFB";
   const borderColor = theme === "dark" ? "#33383F" : "#E5E7EB";
   const textColor = theme === "dark" ? "text-gray-200" : "text-gray-900";
   const navigate = useNavigate();
