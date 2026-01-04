@@ -10,7 +10,7 @@ const RecentBills = ({ recentBillsPromise }) => {
       <h1 className="text-center font-bold text-4xl my-6">Recent Bills</h1>
       {/*Recent Bills Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mx-5">
-        {recentBills.slice(0, 6).map((bill) => (
+        {recentBills.slice(0, 8).map((bill) => (
           <BillCard bill={bill} key={bill._id}></BillCard>
         ))}
       </div>

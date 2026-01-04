@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const BillCard = ({ bill }) => {
+  const navigate = useNavigate();
+  const { theme, colors } = useContext(ThemeContext);
+
+  // Colors based on theme
+  const bgColor = theme === "dark" ? "#1F2225" : "#F9FAFB";
+  const borderColor = theme === "dark" ? "#33383F" : "#E5E7EB";
+  const titleColor = theme === "dark" ? "text-white" : "text-gray-900";
+  const labelColor = theme === "dark" ? "text-gray-400" : "text-gray-600";
+  const valueColor = theme === "dark" ? "text-gray-200" : "text-gray-800";
+
   return (
     <div
       key={bill._id}
-      className="bg-[#1F1F1F] p-4 rounded shadow hover:shadow-lg transition"
+      className={`p-5 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col border`}
+      style={{
+        backgroundColor: bgColor,
+        borderColor: borderColor,
+      }}
     >
-      <img
-        src={bill.image}
-        alt={bill.title}
-        className="w-full h-40 object-cover rounded mb-2"
-      />
-      <h2 className="text-xl text-white font-bold whitespace-nowrap overflow-hidden">
+      {/* Image */}
+      <div className="w-full h-48 rounded-xl overflow-hidden mb-4">
+        <img
+          src={bill.image}
+          alt={bill.title}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+
+      {/* Title */}
+      <h2
+        className={`text-xl sm:text-2xl font-semibold mb-2 truncate ${titleColor}`}
+      >
         {bill.title}
       </h2>
-      <p className="text-gray-600 font-bold">Category: {bill.category}</p>
-      <p>Location: {bill.location}</p>
-      <p>Amount: ${bill.amount}</p>
+
+      {/* Details */}
+      <div className={`text-sm sm:text-base space-y-1 mb-4`}>
+        <p className={`${labelColor}`}>
+          <span className={`font-medium ${valueColor}`}>Category:</span>{" "}
+          {bill.category}
+        </p>
+        <p className={`${labelColor}`}>
+          <span className={`font-medium ${valueColor}`}>Location:</span>{" "}
+          {bill.location}
+        </p>
+        <p className={`${labelColor}`}>
+          <span className={`font-medium ${valueColor}`}>Amount:</span> $
+          {bill.amount}
+        </p>
+      </div>
+
+      {/* Button */}
       <button
         onClick={() => navigate(`/bills/${bill._id}`)}
-        className="mt-2 w-full py-1 bg-blue-500 hover:bg-blue-600 text-white rounded"
+        className="mt-auto w-full py-2 rounded-xl font-medium shadow-lg transition bg-[#438A7A] hover:bg-[#3A7669] text-white duration-300"
       >
         See Details
       </button>
