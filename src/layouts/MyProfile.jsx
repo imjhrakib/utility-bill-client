@@ -3,7 +3,7 @@ import { updateProfile } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthContext } from "../provider/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);

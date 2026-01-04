@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import Navbar from "../components/Headers/Navbar";
 import { Outlet } from "react-router";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../components/shared/Navbar";
+import Footer from "../components/shared/Footer";
 
 const RootLayout = () => {
   return (

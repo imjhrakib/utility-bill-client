@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { ThemeContext } from "../../provider/ThemeContext";
 import { BsEnvelope, BsPhone, BsGeoAlt, BsGlobe } from "react-icons/bs";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Contact = () => {
   const { colors, theme } = useContext(ThemeContext);
@@ -11,9 +11,11 @@ const Contact = () => {
       style={{ backgroundColor: colors[theme].bg }}
     >
       <div
-        className="shadow-lg rounded-lg p-8 w-full max-w-md text-left"
+        className={`shadow-lg rounded-lg p-8 w-full max-w-md text-left border ${
+          theme === "dark" ? "border-gray-700" : "border-gray-200"
+        }`}
         style={{
-          backgroundColor: theme === "dark" ? colors.dark.bgNav : "#ffffff",
+          backgroundColor: theme === "dark" ? "#1F2225" : "#FFFFFF",
           color: theme === "dark" ? colors.dark.text : "#1f2937",
         }}
       >

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
-import BillCard from "../components/BillCard";
+import BillCard from "../components/ui/BillCard";
 
 const Bills = () => {
   const bills = useLoaderData();

@@ -3,11 +3,11 @@ import { ThemeContext } from "./ThemeContext";
 
 const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("dark");
-  const toggleTheme = () => {
+  const toggleTheme = () => {    
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const colors = {
+  const colors = {    
     dark: {
       bg: "#17191A",
       bgNav: "#0F0F12",

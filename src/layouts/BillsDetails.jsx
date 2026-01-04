@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../provider/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLoaderData } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const BillsDetails = () => {
   const bill = useLoaderData();

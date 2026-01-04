@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { ThemeContext } from "../../provider/ThemeContext";
 import {
   AiOutlineWallet,
   AiOutlineDashboard,
@@ -9,6 +8,7 @@ import {
   AiOutlineUsergroupAdd,
 } from "react-icons/ai";
 import { NavLink } from "react-router";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const About = () => {
   const { theme, colors } = useContext(ThemeContext);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext";
+
 import auth from "../firebase/firebase.config.js";
 import {
   createUserWithEmailAndPassword,
@@ -9,8 +9,10 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-const googleProvider = new GoogleAuthProvider();
+import { AuthContext } from "./AuthContext.jsx";
+
 const AuthProvider = ({ children }) => {
+  const googleProvider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const createUser = (email, password) => {

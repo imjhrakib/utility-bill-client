@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useLoaderData, useNavigate } from "react-router";
-import BillCard from "../components/BillCard";
+import BillCard from "../components/ui/BillCard";
 
 const RecentBills = ({ recentBillsPromise }) => {
   const navigate = useNavigate();

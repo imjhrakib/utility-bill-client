@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../provider/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Helmet } from "react-helmet-async";
 
 const MyPayBills = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBill, setSelectedBill] = useState(null);
@@ -27,7 +27,6 @@ const MyPayBills = () => {
     fetch(`https://utility-bill-server.vercel.app/myBills?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setBills(data);
         setLoading(false);
       });
@@ -126,11 +125,9 @@ const MyPayBills = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 pt-25">
       <Helmet>
-        <title>
-          My PayBills || TrustBill
-        </title>
+        <title>My PayBills || TrustBill</title>
       </Helmet>
       <h2 className="text-xl font-bold mb-2">
         Total Bills Paid: {totalBills} | Total Amount: ৳{totalAmount}
