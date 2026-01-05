@@ -29,9 +29,7 @@ const DashboardStatistics = () => {
 
   if (!bills.length) return <p className="p-4">No bills found.</p>;
 
-  const totalPaid = bills
-    .filter((b) => b.paid)
-    .reduce((acc, b) => acc + b.amount, 0);
+  const totalPaid = bills.reduce((acc, b) => acc + b.amount, 0);
 
   return (
     <div

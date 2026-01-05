@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import DemoCredentials from "../DemoCredentials";
@@ -70,9 +69,7 @@ const LoginPage = () => {
           color: theme === "dark" ? colors.dark.text : "#1f2937",
         }}
       >
-        <Helmet>
-          <title>Login || TrustBill</title>
-        </Helmet>
+        
         <h1 className="text-5xl text-center font-bold">Login</h1>
         <h4 className="text-center mt-2.5">
           Don't have an account?{" "}

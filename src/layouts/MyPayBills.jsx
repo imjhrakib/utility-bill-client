@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { Helmet } from "react-helmet-async";
 import { ThemeContext } from "../context/ThemeContext";
 
 const MyPayBills = () => {
@@ -127,9 +126,6 @@ const MyPayBills = () => {
   const text = theme === "dark" ? "#FFFFFF" : "#000000";
   return (
     <div className="p-4 pt-25">
-      <Helmet>
-        <title>My PayBills || TrustBill</title>
-      </Helmet>
       <h2 className="text-xl font-bold mb-2">
         Total Bills Paid: {totalBills} | Total Amount: ৳{totalAmount}
       </h2>

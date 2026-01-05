@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { updateProfile } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
-import { Helmet } from "react-helmet-async";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
@@ -48,10 +47,6 @@ const MyProfile = () => {
         isDark ? "bg-[#0F0F12]" : "bg-gray-100"
       }`}
     >
-      <Helmet>
-        <title>My Profile | TrustBill</title>
-      </Helmet>
-
       <div
         className={`rounded-2xl p-8 w-full max-w-md shadow-lg ${
           isDark ? "bg-[#17191A] text-gray-200" : "bg-white text-gray-800"

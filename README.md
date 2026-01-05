@@ -25,5 +25,4 @@ This is the frontend application for the **Utility Bill Management System**, all
 - **DaisyUI** - Prebuilt Tailwind UI components
 - **SweetAlert2** - Beautiful popup alerts
 - **React Router** - Page navigation
-- **React Helmet Async** - Manage page titles
 - **Fetch API** - Backend API communication

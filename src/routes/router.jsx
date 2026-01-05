@@ -12,8 +12,8 @@ import RegistrationPage from "../components/RegistrationPage/RegistrationPage";
 import NotFoundPage from "../NotFound/NotFound";
 import RootLayout from "../RootLayout/RootLayout";
 import Dashboard from "../dashboard/Dashboard";
-import DashboardHome from "../dashboard/DashboardHome";
 import Statistics from "../dashboard/DashboardStatistics";
+import DashboardHome from "../dashboard/DashboardOverview";
 
 export const router = createBrowserRouter([
   {

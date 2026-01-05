@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
-import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -105,9 +104,6 @@ const RegistrationPage = () => {
           color: theme === "dark" ? colors.dark.text : "#1f2937",
         }}
       >
-        <Helmet>
-          <title>Register || TrustBill</title>
-        </Helmet>
         <h1 className="text-5xl font-bold mx-auto mb-2">Register now!</h1>
         <h4 className="mx-auto">
           Already have an account?{" "}

@@ -3,7 +3,6 @@ import HeroSection from "../components/Headers/HeroSection";
 import CategorySection from "../components/CategorySection/CategorySection";
 import Features from "../components/Features/Features";
 import Reviews from "../components/Reviews/Reviews";
-import { Helmet } from "react-helmet-async";
 import RecentBills from "./RecentBills";
 import Statistics from "./Statistics";
 import BtnPrimary from "../components/ui/BtnPrimary";
@@ -20,9 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <Helmet>
-        <title>Home || TrustBill</title>
-      </Helmet>
+    
       <HeroSection></HeroSection>
       <RecentBills recentBillsPromise={recentBillsPromise}></RecentBills>
       <div className="flex justify-center " onClick={() => navigate("/bills")}>
