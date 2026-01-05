@@ -11,6 +11,9 @@ import LoginPage from "../components/LoginPage/LoginPage";
 import RegistrationPage from "../components/RegistrationPage/RegistrationPage";
 import NotFoundPage from "../NotFound/NotFound";
 import RootLayout from "../RootLayout/RootLayout";
+import Dashboard from "../dashboard/Dashboard";
+import DashboardHome from "../dashboard/DashboardHome";
+import Statistics from "../dashboard/DashboardStatistics";
 
 export const router = createBrowserRouter([
   {
@@ -45,15 +48,6 @@ export const router = createBrowserRouter([
             `https://utility-bill-server.vercel.app/bills/${params.id}`
           ).then((res) => res.json()),
       },
-
-      {
-        path: "myPayBills",
-        element: (
-          <PrivateRoute>
-            <MyPayBills></MyPayBills>
-          </PrivateRoute>
-        ),
-      },
       {
         path: "profile",
         element: (
@@ -69,6 +63,36 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <RegistrationPage></RegistrationPage>,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "myPayBills",
+        element: (
+          <PrivateRoute>
+            <MyPayBills></MyPayBills>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "statistics",
+        element: (
+          <PrivateRoute>
+            <Statistics></Statistics>
+          </PrivateRoute>
+        ),
       },
     ],
   },

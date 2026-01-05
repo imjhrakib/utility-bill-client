@@ -1,23 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { BsBrightnessHigh } from "react-icons/bs";
+import { BsSun, BsMoon } from "react-icons/bs";
 import { ThemeContext } from "../../context/ThemeContext";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const { user, signOutUser, setUser, logOut } = useContext(AuthContext);
+  const { user, signOutUser, setUser } = useContext(AuthContext);
   const { theme, toggleTheme, colors } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const dropdownRef = useRef(null);
+
   const handleLogOut = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#438A7A",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, log me out!",
     }).then((result) => {
@@ -57,32 +58,18 @@ const Navbar = () => {
         </NavLink>
       </li>
       {user && (
-        <>
-          <li>
-            <NavLink
-              to={"/myPayBills"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
-                  : "hover:text-[#438A7A]"
-              }
-            >
-              My Pay Bills
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard"}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
-                  : "hover:text-[#438A7A]"
-              }
-            >
-              Dashboard
-            </NavLink>
-          </li>
-        </>
+        <li>
+          <NavLink
+            to={"/dashboard"}
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+                : "hover:text-[#438A7A]"
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
       )}
       <li>
         <NavLink
@@ -121,7 +108,9 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const navBg = theme === "dark" ? "#2A2E33" : "#F9FAFB";
+
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 shadow-md transition-colors"
@@ -165,18 +154,18 @@ const Navbar = () => {
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
-          {/* Theme Toggle */}
+          {/* Dark/Light Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 rounded hover:bg-gray-200/20 transition"
             title="Toggle Theme"
           >
-            <BsBrightnessHigh size={20} />
+            {theme === "dark" ? <BsSun size={20} /> : <BsMoon size={20} />}
           </button>
 
           {/* Auth Buttons */}
           {user ? (
-            <div ref={dropdownRef} className="flex items-center gap-4">
+            <div ref={dropdownRef} className="flex items-center gap-4 relative">
               <img
                 onClick={() => setProfileOpen(!profileOpen)}
                 src={user?.photoURL}
@@ -189,7 +178,6 @@ const Navbar = () => {
                   className="absolute right-2 top-14 mt-2 w-52 rounded-xl shadow-lg border border-gray-200 z-50"
                   style={{ backgroundColor: colors[theme].bgNav }}
                 >
-                  {/* Profile */}
                   <Link to="/profile" onClick={() => setProfileOpen(false)}>
                     <p className="flex items-center gap-3 px-4 py-3 text-sm text-gray-800 border-b border-gray-200 hover:bg-teal-50 transition">
                       <span>
@@ -208,7 +196,6 @@ const Navbar = () => {
                     </p>
                   </Link>
 
-                  {/* Dashboard */}
                   <NavLink
                     to="/dashboard"
                     onClick={() => setProfileOpen(false)}
@@ -217,7 +204,6 @@ const Navbar = () => {
                     Dashboard
                   </NavLink>
 
-                  {/* Logout */}
                   <button
                     onClick={handleLogOut}
                     className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"

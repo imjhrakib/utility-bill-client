@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
+import DemoCredentials from "../DemoCredentials";
 
 const LoginPage = () => {
   const { user, setUser, signInUser, signInWithGoogle } =
@@ -79,6 +80,9 @@ const LoginPage = () => {
             <NavLink to={"/register"}>Register Now</NavLink>
           </span>
         </h4>
+        <div className="mx-5">
+          <DemoCredentials></DemoCredentials>
+        </div>
         <div className="card-body">
           <form onSubmit={handleLogin}>
             <fieldset className="fieldset">
