@@ -4,9 +4,16 @@ import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
+
+const DEFAULT_IMAGE = "https://i.ibb.co/jPZ79VDq/Online-Shoping-29.jpg";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
+
+  const isDark = theme === "dark";
+
   const [formData, setFormData] = useState({
     name: user?.displayName || "",
     email: user?.email || "",
@@ -16,91 +23,105 @@ const MyProfile = () => {
   // handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // update user info in firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) return;
+
     try {
       await updateProfile(user, {
         displayName: formData.name,
         photoURL: formData.photoURL,
       });
-      toast.success("✅ Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (err) {
-      toast.error(`❌ ${err.message}`);
+      toast.error(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-start p-6">
+    <div
+      className={`min-h-screen flex justify-center items-start p-6 pt-20 transition-colors ${
+        isDark ? "bg-[#0F0F12]" : "bg-gray-100"
+      }`}
+    >
       <Helmet>
-        <title>myProfile</title>
+        <title>My Profile | TrustBill</title>
       </Helmet>
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md hover:shadow-2xl transition-shadow duration-300">
-        <h2 className="text-3xl font-bold text-center mb-6 text-blue-600">
-          My Profile
+      <div
+        className={`rounded-2xl p-8 w-full max-w-md shadow-lg ${
+          isDark ? "bg-[#17191A] text-gray-200" : "bg-white text-gray-800"
+        }`}
+      >
+        <h2 className="text-2xl font-bold text-center mb-6 text-[#438A7A]">
+          Account Profile
         </h2>
 
         {/* Profile Picture */}
         <div className="flex justify-center mb-6">
           <img
-            src={
-              formData.photoURL ||
-              "https://i.ibb.co/jPZ79VDq/Online-Shoping-29.jpg"
-            }
+            src={formData.photoURL?.trim() ? formData.photoURL : DEFAULT_IMAGE}
             alt="Profile"
-            className="w-28 h-28 rounded-full border-4 border-blue-500 object-cover shadow-lg"
+            className="w-28 h-28 rounded-full border-4 border-[#438A7A] object-cover shadow-md"
           />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Name</label>
+            <label className="block text-sm mb-1">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg text-black focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className={`w-full px-4 py-2 rounded-lg border focus:outline-none ${
+                isDark
+                  ? "bg-[#0F0F12] border-gray-700 text-white focus:border-primary"
+                  : "bg-white border-gray-300 text-black focus:border-primary"
+              }`}
               required
             />
           </div>
 
-          {/* Email (read-only) */}
+          {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Email
-            </label>
+            <label className="block text-sm mb-1">Email</label>
             <input
               type="email"
-              name="email"
               value={formData.email}
               disabled
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-black cursor-not-allowed"
+              className={`w-full px-4 py-2 rounded-lg border cursor-not-allowed ${
+                isDark
+                  ? "bg-[#0F0F12] border-gray-700 text-gray-400"
+                  : "bg-gray-100 border-gray-300 text-gray-600"
+              }`}
             />
           </div>
 
           {/* Photo URL */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Profile Picture URL
-            </label>
+            <label className="block text-sm mb-1">Profile Image URL</label>
             <input
               type="text"
               name="photoURL"
               value={formData.photoURL}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 text-black focus:ring-blue-400 focus:outline-none"
+              className={`w-full px-4 py-2 rounded-lg border focus:outline-none ${
+                isDark
+                  ? "bg-[#0F0F12] border-gray-700 text-white focus:border-primary"
+                  : "bg-white border-gray-300 text-black focus:border-primary"
+              }`}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md transition-colors duration-300"
+            className="w-full py-2 rounded-lg bg-[#438A7A] hover:opacity-90 text-white font-semibold transition"
           >
             Update Profile
           </button>

@@ -16,7 +16,7 @@ const NotFoundPage = () => {
         onClick={() => navigate("/")}
         className="mt-6 px-6 py-3 bg-[#438A7A] text-white rounded-lg hover:bg-[#3A7669] transition font-medium"
       >
-        Go Back to Dashboard
+        Go Back to Home
       </button>
     </div>
   );

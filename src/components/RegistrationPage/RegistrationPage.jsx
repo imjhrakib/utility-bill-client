@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
@@ -7,64 +7,82 @@ import { AuthContext } from "../../context/AuthContext";
 import { ThemeContext } from "../../context/ThemeContext";
 
 const RegistrationPage = () => {
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const { theme, colors } = useContext(ThemeContext);
   const pattern = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
   const navigate = useNavigate();
   const { user, setUser, createUser, signInWithGoogle } =
     useContext(AuthContext);
-  const handleRegister = (e) => {
+
+  const handleRegister = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const photoUrl = e.target.photo.value;
-    const password = e.target.password.value;
-    const newUser = {
-      name,
-      email,
-      password,
-      photoUrl,
-    };
+    const photoURL = e.target.photo.value;
+    const newUser = { name, email, password, photoURL };
 
     if (!pattern.test(password)) {
       Swal.fire({
         icon: "error",
-        title: "Invalid Password",
+        title: "Weak password",
         text: "Password must contain at least 1 uppercase, 1 lowercase letter and be 6+ characters long.",
       });
       return;
     }
-    if (user == null) {
-      createUser(email, password)
-        .then((result) => {
-          const user = result.user;
-          updateProfile(user, {
-            displayName: name,
-            photoURL: photoUrl,
-          });
-          navigate("/");
-        })
-        .catch((error) => {
-          Swal.fire({
-            icon: "info", // icon type: 'success', 'error', 'info', etc.
-            title: "Already Logged In",
-            text: `${error.message}`,
-            confirmButtonText: "OK",
-          });
-        });
-    } else {
+
+    if (user) {
       Swal.fire({
         icon: "info",
         title: "Already Logged In",
         text: "You are already logged in, please log out first to register a new account.",
         confirmButtonText: "OK",
       });
+      return;
+    }
+
+    try {
+      // 1️⃣ Create Firebase user
+      const result = await createUser(email, password);
+      const firebaseUser = result.user;
+
+      // 2️⃣ Update Firebase profile
+      await updateProfile(firebaseUser, {
+        displayName: name,
+        photoURL: photoURL,
+      });
+
+      // 3️⃣ Send user data to backend
+      const response = await fetch(
+        "https://utility-bill-server.vercel.app/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUser),
+        }
+      );
+      const data = await response.json();
+      console.log("Inserted in DB:", data);
+
+      // 4️⃣ Update user context and navigate
+      setUser(firebaseUser);
+      navigate(from, { replace: true });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: error.message,
+        confirmButtonText: "OK",
+      });
     }
   };
+
   const handleGoogleSignIn = () => {
     if (user == null) {
       signInWithGoogle()
         .then((result) => {
           setUser(result.user);
+          navigate(from, { replace: true });
         })
         .catch((error) => console.log(error.message));
     } else {

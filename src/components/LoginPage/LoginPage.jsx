@@ -9,6 +9,7 @@ const LoginPage = () => {
   const { user, setUser, signInUser, signInWithGoogle } =
     useContext(AuthContext);
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
   const { theme, colors } = useContext(ThemeContext);
 

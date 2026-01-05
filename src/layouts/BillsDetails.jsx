@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,7 +8,7 @@ const BillsDetails = () => {
   const bill = useLoaderData();
   const { user } = useContext(AuthContext) || {};
   const { theme, colors } = useContext(ThemeContext);
-
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     username: user?.displayName || "",
@@ -29,7 +29,7 @@ const BillsDetails = () => {
   const handlePay = (e) => {
     e.preventDefault();
     if (!user) {
-      toast.error("❌ Please login to pay!");
+      navigate("/login");
       return;
     }
 
@@ -88,6 +88,7 @@ const BillsDetails = () => {
           onClick={() => {
             if (!user) {
               toast.error("❌ Please login to pay!");
+              navigate("/login");
               return;
             }
             setShowModal(true);

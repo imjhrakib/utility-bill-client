@@ -1,6 +1,5 @@
 import React, { use } from "react";
 import BillCard from "../components/ui/BillCard";
-import BtnPrimary from "../components/ui/BtnPrimary";
 
 const RecentBills = ({ recentBillsPromise }) => {
   const recentBills = use(recentBillsPromise);
@@ -13,7 +12,6 @@ const RecentBills = ({ recentBillsPromise }) => {
           <BillCard bill={bill} key={bill._id}></BillCard>
         ))}
       </div>
-      
     </div>
   );
 };

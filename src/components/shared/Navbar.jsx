@@ -57,18 +57,32 @@ const Navbar = () => {
         </NavLink>
       </li>
       {user && (
-        <li>
-          <NavLink
-            to={"/myPayBills"}
-            className={({ isActive }) =>
-              isActive
-                ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
-                : "hover:text-[#438A7A]"
-            }
-          >
-            My Pay Bills
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink
+              to={"/myPayBills"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+                  : "hover:text-[#438A7A]"
+              }
+            >
+              My Pay Bills
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#438A7A] font-semibold border-b-2 p-1 rounded-b-sm"
+                  : "hover:text-[#438A7A]"
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        </>
       )}
       <li>
         <NavLink
@@ -181,7 +195,7 @@ const Navbar = () => {
                       <span>
                         <img
                           src={user?.photoURL || "/avatar.png"}
-                          className="w-9 h-9 rounded-full object-cover ring-2 ring-teal-500"
+                          className="w-9 h-9 rounded-full object-cover ring-2  ring-[#438A7A]"
                           alt="User"
                         />
                       </span>
